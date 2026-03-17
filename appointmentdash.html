@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MetaCare Biotechnology Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<link rel="stylesheet" href="apointmentdash.css">
+
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+
+<div class="sidebar">
+
+<div class="logo">
+
+<i class="bi bi-heart-pulse"></i>
+<h3>StacklyCare</h3>
+
+</div>
+
+<ul>
+
+<li >
+<a href="patdashboard.html">
+<i class="bi bi-grid"></i>
+<span>Overview</span>
+</a>
+</li>
+
+<li class="active">
+<a href="appointmentdash.html">
+<i class="bi bi-calendar-check"></i>
+<span>Appointments</span>
+</a>
+</li>
+
+
+<li>
+<a href="report.html">
+<i class="bi bi-gear"></i>
+<span>Reports</span>
+</a>
+</li>
+
+<li>
+<a href="index.html">
+<i class="bi bi-house"></i>
+<span>Back Home</span>
+</a>
+</li>
+
+</ul>
+
+
+</div>
+
+<div class="main">
+
+<header class="topbar">
+
+<button class="menu-btn" id="menuToggle">
+<i class="bi bi-list"></i>
+</button>
+
+<h4>Biotech Appointment Dashboard</h4>
+
+<div class="top-icons">
+
+<i class="bi bi-search"></i>
+<i class="bi bi-bell"></i>
+<i class="bi bi-chat-dots"></i>
+<i class="bi bi-person-circle"></i>
+
+<span id="topEmail"></span>
+
+</div>
+
+</header>
+
+
+<div class="stats">
+
+<div class="card-box">
+
+<i class="bi bi-calendar-check"></i>
+<h3>12</h3>
+<p>Total Appointments</p>
+
+</div>
+
+<div class="card-box">
+
+<i class="bi bi-clock"></i>
+<h3>4</h3>
+<p>Upcoming Visits</p>
+
+</div>
+
+<div class="card-box">
+
+<i class="bi bi-check-circle"></i>
+<h3>8</h3>
+<p>Completed</p>
+
+</div>
+
+<div class="card-box">
+
+<i class="bi bi-file-medical"></i>
+<h3>6</h3>
+<p>Reports Uploaded</p>
+
+</div>
+
+</div>
+
+
+<section class="appointments">
+
+<h4>
+<i class="bi bi-calendar-event"></i>
+Upcoming Appointments
+</h4>
+
+<table>
+
+<thead>
+<tr>
+<th>Date</th>
+<th>Doctor</th>
+<th>Department</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>22 March</td>
+<td>Dr. Anderson</td>
+<td>Genetics</td>
+<td class="status">Confirmed</td>
+</tr>
+
+<tr>
+<td>25 March</td>
+<td>Dr. Smith</td>
+<td>Neurology</td>
+<td class="status">Pending</td>
+</tr>
+
+<tr>
+<td>29 March</td>
+<td>Dr. Lee</td>
+<td>Cardiology</td>
+<td class="status">Confirmed</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+<section class="add-appointment">
+
+<h4>
+<i class="bi bi-plus-circle"></i>
+Book New Appointment
+</h4>
+
+<form action="error.html">
+
+<input type="date">
+
+<select>
+<option>Select Doctor</option>
+<option>Dr Anderson</option>
+<option>Dr Smith</option>
+<option>Dr Lee</option>
+</select>
+
+<select>
+<option>Department</option>
+<option>Genetics</option>
+<option>Cardiology</option>
+<option>Neurology</option>
+<option>Biochemistry</option>
+</select>
+
+<button type="submit">
+<i class="bi bi-calendar-plus"></i>
+Book Appointment
+</button>
+
+</form>
+
+</section>
+
+
+<section class="reminders">
+
+<h4>
+<i class="bi bi-bell"></i>
+Health Reminders
+</h4>
+
+<div class="reminder">
+
+<i class="bi bi-capsule"></i>
+<p>Take Vitamin D supplement at 8 AM</p>
+
+</div>
+
+<div class="reminder">
+
+<i class="bi bi-heart-pulse"></i>
+<p>Cardiology appointment tomorrow</p>
+
+</div>
+
+<div class="reminder">
+
+<i class="bi bi-eyedropper"></i>
+<p>Blood test scheduled next week</p>
+
+</div>
+
+</section>
+
+
+<section class="upload">
+
+<h4>
+<i class="bi bi-cloud-upload"></i>
+Upload Medical Report
+</h4>
+
+<div class="upload-box">
+
+<i class="bi bi-cloud-arrow-up"></i>
+<p>Upload PDF / Image</p>
+
+<input type="file">
+
+</div>
+
+</section>
+
+</div>
+<script>
+    const sidebar=document.querySelector(".sidebar")
+const overlay=document.querySelector(".overlay")
+const menu=document.getElementById("menuToggle")
+
+menu.onclick=()=>{
+
+sidebar.classList.toggle("active")
+overlay.classList.toggle("active")
+
+}
+
+overlay.onclick=()=>{
+
+sidebar.classList.remove("active")
+overlay.classList.remove("active")
+
+}
+
+
+const email=localStorage.getItem("userEmail")
+
+if(email){
+
+document.getElementById("userEmail").innerText=email
+document.getElementById("topEmail").innerText=email
+
+}
+</script>
+
+</body>
+</html>

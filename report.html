@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Medical Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+font-family:Segoe UI;
+color:white;
+}
+
+
+.sidebar{
+width:230px;
+height:100vh;
+background:#0d1b2a;
+position:fixed;
+left:0;
+top:0;
+padding:25px;
+transition:0.3s;
+z-index:1000;
+overflow-y:auto;
+}
+.sidebar a{
+ text-decoration: none;
+color:inherit;
+display:block;
+}
+.sidebar ul li a{
+
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px;
+border-radius:10px;
+text-decoration:none;
+color:white;
+
+}
+
+.sidebar li{
+list-style:none;
+padding:12px;
+border-radius:10px;
+margin-bottom:10px;
+cursor:pointer;
+}
+
+.sidebar li:hover{
+background:#1b263b;
+}
+
+.activeMenu{
+background:#0077b6;
+}
+
+
+.main{
+margin-left:250px;
+padding:30px;
+}
+
+
+.profileCard{
+background:linear-gradient(135deg,#4facfe,#00f2fe);
+border-radius:20px;
+padding:20px;
+display:flex;
+align-items:center;
+gap:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.profileCard img{
+width:80px;
+border-radius:10px;
+}
+
+.cardBox{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(10px);
+padding:20px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+
+.metric{
+font-size:32px;
+font-weight:bold;
+}
+
+
+.calendar{
+background:rgba(255,255,255,0.08);
+padding:20px;
+border-radius:18px;
+backdrop-filter:blur(10px);
+}
+
+
+.brainImg{
+width:100%;
+border-radius:18px;
+}
+
+
+.bookBtn{
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+border:none;
+padding:12px;
+border-radius:30px;
+color:white;
+font-weight:bold;
+}
+
+
+.doctorCard{
+background:rgba(255,255,255,0.08);
+padding:12px;
+border-radius:12px;
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+backdrop-filter:blur(10px);
+}
+.sidebar ul li.active a{
+background:#1677a6;
+
+}
+
+.doctorCard img{
+width:40px;
+border-radius:50%;
+}
+
+
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+opacity:0;
+visibility:hidden;
+transition:0.3s;
+z-index:90;
+}
+
+.overlay.active{
+opacity:1;
+visibility:visible;
+}
+
+.menu-toggle{
+display:none;
+position:fixed;
+top:15px;
+left:15px;
+z-index:200;
+font-size:26px;
+background:#0b1e33;
+border:none;
+color:white;
+padding:12px 14px;
+border-radius:12px;
+box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+@media(max-width:576px){
+
+.menu-toggle{
+display:block;
+position: absolute;
+}
+
+.main{
+margin-left:0;
+padding-top:70px;
+}
+
+.sidebar{
+left:-250px;
+}
+
+.sidebar.active{
+left:0;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="sidebar" id="sidebar">
+
+<h4 class="mb-4">
+<i class="bi bi-heart-pulse text-info"></i> StacklyCare
+</h4>
+
+<ul class="p-0">
+
+<li>
+    <a href="patdashboard.html">
+<i class="bi bi-grid"></i> Overview
+</a>
+</li>
+
+<li>
+<a href="appointmentdash.html">
+<i class="bi bi-calendar-check"></i> Appointment
+</a>
+</li>
+
+<li class="active">
+<a href="report.html">
+<i class="bi bi-file-earmark-medical"></i> Report
+</a>
+</li>
+
+
+<li>
+<a href="index.html">
+<i class="bi bi-house"></i> Back to home
+</a>
+</li>
+</ul>
+
+</div>
+
+
+<div class="overlay" onclick="toggleMenu()"></div>
+
+
+<button class="menu-toggle" onclick="toggleMenu()">
+<i class="bi bi-list"></i>
+</button>
+
+
+<div class="main">
+
+<h2>Surgical Report</h2>
+<p class="text-light">Centralized details of operations with doctor’s remarks.</p>
+
+<div class="row g-4">
+
+
+<div class="col-lg-8">
+
+
+<div class="profileCard mb-4">
+
+<img src="https://randomuser.me/api/portraits/men/32.jpg">
+
+<div>
+<h5 id="useremail"></h5>
+<span id="userEmail" class="ms-3 text-muted"></span>
+</div>
+
+</div>
+
+
+<div class="row g-4">
+
+<div class="col-md-6">
+
+<div class="cardBox">
+
+<h6>Blood Sugar</h6>
+
+<div class="metric text-warning">240/ml</div>
+
+<canvas id="sugarChart"></canvas>
+
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="cardBox">
+
+<h6>Blood Pressure</h6>
+
+<div class="metric text-danger">120 mmHg</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="cardBox mt-4">
+
+<h6>Brain MRI</h6>
+
+<img class="brainImg"
+src="brain2.webp">
+
+</div>
+
+
+<div class="cardBox mt-4">
+
+<h6>Neuro Activity</h6>
+
+<canvas id="activityChart"></canvas>
+
+</div>
+
+</div>
+
+
+<div class="col-lg-4">
+
+<div class="calendar mb-4">
+
+<h6>Appointments</h6>
+
+<table class="table text-center text-light">
+
+<tr>
+<th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
+</tr>
+
+<tr>
+<td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+</tr>
+
+<tr>
+<td>8</td><td class="bg-danger text-white">9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td>
+</tr>
+
+<tr>
+<td>15</td><td>16</td><td>17</td><td class="bg-success text-white">18</td><td>19</td><td>20</td><td>21</td>
+</tr>
+
+<tr>
+<td class="bg-primary text-white">22</td>
+<td>23</td>
+<td>24</td>
+<td>25</td>
+<td class="bg-warning text-dark">26</td>
+<td>27</td>
+<td class="bg-info text-dark">28</td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="cardBox">
+
+<h6>Your Doctor</h6>
+
+<div class="doctorCard">
+
+<img src="https://randomuser.me/api/portraits/men/45.jpg">
+
+<div>
+<p class="mb-0">Albert Smith</p>
+<small>Cardiologist</small>
+</div>
+
+</div>
+
+<div class="doctorCard">
+
+<img src="https://randomuser.me/api/portraits/men/55.jpg">
+
+<div>
+<p class="mb-0">David Lee</p>
+<small>Neurologist</small>
+</div>
+
+</div>
+<form action="error.html">
+<button class="bookBtn w-100 mt-3" type="submit">
+Book an Appointment
+</button>
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+let email = localStorage.getItem("userEmail");
+
+document.getElementById("userEmail").innerText = email;
+
+function toggleMenu(){
+
+const sidebar = document.getElementById("sidebar");
+const overlay = document.querySelector(".overlay");
+
+sidebar.classList.toggle("active");
+overlay.classList.toggle("active");
+
+}
+
+
+new Chart(document.getElementById("sugarChart"),{
+
+type:'line',
+
+data:{
+labels:["1","2","3","4","5","6"],
+datasets:[{
+data:[200,220,210,240,230,240],
+borderColor:"#00c6ff",
+tension:0.4
+}]
+},
+
+options:{
+plugins:{legend:{display:false}},
+scales:{x:{display:false},y:{display:false}}
+}
+
+});
+
+
+new Chart(document.getElementById("activityChart"),{
+
+type:'line',
+
+data:{
+labels:["02","03","04","05","06","07","08","09"],
+datasets:[{
+data:[20,25,22,30,24,28,32,35],
+borderColor:"#4facfe",
+tension:0.4
+}]
+},
+
+options:{
+plugins:{legend:{display:false}}
+}
+
+});
+
+</script>
+
+</body>
+</html>

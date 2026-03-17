@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Biotech Research Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<link rel="stylesheet" href="researchdash.css">
+</head>
+
+<body>
+
+<div class="sidebar" id="sidebar">
+    <h4 class="text-center mt-3">StacklyLab</h4>
+
+    <ul class="nav flex-column mt-4">
+        <li><a href="resdashboard.html"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+        <li><a href="analysticsdash.html"><i class="bi bi-activity"></i> Analytics</a></li>
+        <li><a href="index.html"><i class="bi bi-house"></i> Back to Home</a></li>
+    </ul>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="main">
+
+    <div class="topbar">
+        <button class="menu-btn" onclick="toggleSidebar()">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <div class="top-right">
+            <i class="bi bi-bell"></i>
+            <i class="bi bi-person-circle"></i>
+            <span id="topEmail">user@email.com</span>
+        </div>
+    </div>
+
+
+    <div class="container-fluid mt-4">
+
+        <div class="card p-3 mb-4">
+            <h5>Welcome Researcher 👨‍🔬</h5>
+            <p>Email: <span id="userEmail"></span></p>
+        </div>
+
+
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="card stat">
+                    <i class="bi bi-flask"></i>
+                    <h6>Experiments</h6>
+                    <h3>128</h3>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card stat">
+                    <i class="bi bi-people"></i>
+                    <h6>Patients</h6>
+                    <h3>86</h3>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card stat">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <h6>Reports</h6>
+                    <h3>54</h3>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card stat">
+                    <i class="bi bi-activity"></i>
+                    <h6>Active Tests</h6>
+                    <h3>12</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4 p-3">
+            <h5>Upload Research Data</h5>
+            <input type="file" class="form-control mt-2">
+            <button class="btn btn-primary mt-3">Upload</button>
+        </div>
+
+
+        <div class="card mt-4 p-3">
+            <h5>Recent Activity</h5>
+            <ul class="list-group">
+                <li class="list-group-item">DNA Sample Uploaded</li>
+                <li class="list-group-item">New Patient Added</li>
+                <li class="list-group-item">Report Generated</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+const email = localStorage.getItem("userEmail");
+
+if (email) {
+    document.getElementById("userEmail").innerText = email;
+    document.getElementById("topEmail").innerText = email;
+}
+
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+</script>
+</body>
+</html>
